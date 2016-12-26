@@ -26,19 +26,18 @@ app.post('/webhook', function (req, res) {
     for (i = 0; i < events.length; i++) {
         var event = events[i];
         if (event.message && event.message.text) {
-			var word = event.message.text.split(" ");
-			var lol = /L+O+L+/i;
-			var lmao = /L+M+A+O+/i;
-			var rofl = /R+O+F+L+/i;
-			var haha = /H+A+/i;
-			var outString = "Echo: " + event.message.text;
+			var word = event.message.text;
+			var lol = /.*L+O+L+.*/i;
+			var lmao = /.*L+M+A+O+.*/i;
+			var rofl = /.*R+O+F+L+.*/i;
+			var haha = /.*H+A+.*/i;
+			var outString = "Echo: " + word;
 			var outArrs = ["Haha you so funny!","HAHA YEAH AM LAUGHING MY ASS OFF TOO!","lel","whut\nlol","hahahahahahahahahahahahaha"];
-			for(var j=0;j < word.length; j++){
-				if(word.test(word[0]) || lol.test(word[0]) || lmao.test(word[0]) || rofl.test(word[0]) || haha.test(word[0])){
-					outString = outArrs[Math.random()*5];
-				}
+			if(lol.test(word) || lmao.test(word) || rofl.test(word) || haha.test(word)){
+				var num = Math.floor(Math.random()*5);
+				outString = outArrs[num];
 			}
-			sendMessage(event.sender.id, {text: outString});
+			res.sendMessage(event.sender.id,{text: outString})
         }
     }
     res.sendStatus(200);
