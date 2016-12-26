@@ -37,7 +37,7 @@ app.post('/webhook', function (req, res) {
 				var num = Math.floor(Math.random()*5);
 				outString = outArrs[num];
 			}
-			res.sendMessage(event.sender.id,{text: outString})
+			res.sendMessage(event.sender.id,{text: outString});
         }
     }
     res.sendStatus(200);
